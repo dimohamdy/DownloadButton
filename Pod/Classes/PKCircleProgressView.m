@@ -12,7 +12,7 @@
 
 static const CGFloat kDefaultRaduis = 13.f;
 static const CGFloat kDefaultFilledLineWidth = 3.f;
-static const CGFloat kDefaultEmptyLineWidth = 1.f;
+static const CGFloat kDefaultEmptyLineWidth = 3.f;
 static const CGFloat kStartAngle = M_PI * 1.5;
 
 @interface PKCircleProgressView ()
@@ -50,7 +50,7 @@ static PKCircleProgressView *CommonInit(PKCircleProgressView *self) {
         self.emptyLineCircleView = emptyLineCircleView;
         emptyLineCircleView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:emptyLineCircleView];
-        
+        emptyLineCircleView.tintColor = [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1.00];
         PKCircleView *filledLineCircleView = [self createFilledLineCircleView];
         self.filledLineCircleView = filledLineCircleView;
         filledLineCircleView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -124,14 +124,8 @@ static PKCircleProgressView *CommonInit(PKCircleProgressView *self) {
 - (void)updateConstraints {
     [super updateConstraints];
     self.emptyLineCircleSize = self.radius * 2.f;
-    CGFloat deltaRaduis = 0.f;
-    if (self.filledLineStyleOuter) {
-        deltaRaduis = - self.emptyLineCircleView.lineWidth / 2.f + self.filledLineCircleView.lineWidth;
-    }
-    else {
-        deltaRaduis = - self.emptyLineCircleView.lineWidth / 2.f;
-    }
-    self.filledLineCircleSize = self.radius * 2.f + deltaRaduis * 2.f;
+    self.filledLineCircleSize = self.radius * 2.f;
+    
 }
 
 #pragma mark - private methods
@@ -172,9 +166,11 @@ static PKCircleProgressView *CommonInit(PKCircleProgressView *self) {
     NSMutableArray *constraints = [NSMutableArray array];
     [constraints addObjectsFromArray:[NSLayoutConstraint constraintsForCenterView:self.emptyLineCircleView
                                                                          withView:self]];
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsForWrappedSubview:self.filledLineCircleView
-                                                                           withInsets:UIEdgeInsetsZero]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsForCenterView:self.filledLineCircleView
+                                                                         withView:self]];
+    
     return constraints;
 }
 
 @end
+
