@@ -34,9 +34,13 @@
             [self.pendingSimulator cancelDownload];
             self.downloadButton.state = kPKDownloadButtonState_StartDownload;
             break;
-        case kPKDownloadButtonState_Downloading:
+        case kPKDownloadButtonState_Downloading_Resume:
+            [self.downloaderSimulator startDownload];
+            self.downloadButton.state = kPKDownloadButtonState_Downloading_Paused;
+            break;
+        case kPKDownloadButtonState_Downloading_Paused:
             [self.downloaderSimulator cancelDownload];
-            self.downloadButton.state = kPKDownloadButtonState_StartDownload;
+            self.downloadButton.state = kPKDownloadButtonState_Downloading_Resume;
             break;
         case kPKDownloadButtonState_Downloaded:
             self.downloadButton.state = kPKDownloadButtonState_StartDownload;
@@ -53,7 +57,7 @@
 - (void)simulator:(PKDownloaderSimulator *)simulator didUpdateProgress:(double)progress {
     if (simulator == self.pendingSimulator) {
         if (progress == 1.) {
-            self.downloadButton.state = kPKDownloadButtonState_Downloading;
+            self.downloadButton.state = kPKDownloadButtonState_Downloading_Paused;
             [self.downloaderSimulator startDownload];
         }
     }

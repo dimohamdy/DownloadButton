@@ -63,9 +63,13 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
         case kPKDownloadButtonState_Pending:
             self.pendingView.hidden = NO;
             break;
-        case kPKDownloadButtonState_Downloading:
+        case kPKDownloadButtonState_Downloading_Resume:
             self.stopDownloadButton.hidden = NO;
-            self.stopDownloadButton.progress = 0.f;
+            [self.stopDownloadButton setCurrentState:kPKStopDownloadButtonState_Resume];
+            break;
+        case kPKDownloadButtonState_Downloading_Paused:
+            self.stopDownloadButton.hidden = NO;
+            [self.stopDownloadButton setCurrentState:kPKStopDownloadButtonState_Paused];
             break;
         case kPKDownloadButtonState_Downloaded:
             self.downloadedButton.hidden = NO;

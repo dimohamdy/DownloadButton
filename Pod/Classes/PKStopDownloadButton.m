@@ -15,12 +15,12 @@ static const CGFloat kDefaultStopButtonWidth = 8.f;
 @interface PKStopDownloadButton ()
 
 @property (nonatomic, weak) UIButton *stopButton;
+@property (nonatomic) PKStopDownloadButtonState state;
 
 - (UIButton *)createStopButton;
 - (NSArray *)createStopButtonConstraints;
 - (void)updateAppearance;
 - (PKCircleProgressView *)createCircleProgressView;
-
 @end
 
 static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
@@ -85,11 +85,27 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
 #pragma mark - appearance
 
 - (void)updateAppearance {
-	[self.stopButton setImage:[UIImage stopImageOfSize:_stopButtonWidth color:self.tintColor]
-				forState:UIControlStateNormal];
-}
+    
+    switch (self.state) {
+        case kPKStopDownloadButtonState_Resume:
+            [self.stopButton setImage:[UIImage imageNamed:@"play"]
+                             forState:UIControlStateNormal];
+            break;
+        case kPKStopDownloadButtonState_Paused:
+            [self.stopButton setImage:[UIImage imageNamed:@"pause"]
+                             forState:UIControlStateNormal];
+            break;
+        default:
+            NSAssert(NO, @"unsupported state");
+            break;
+    }
 
-- (void)tintColorDidChange {
+}
+- (void)setCurrentState:(PKStopDownloadButtonState)state{
+    self.state = state;
+    [self updateAppearance];
+}
+;- (void)tintColorDidChange {
 	[super tintColorDidChange];
 	[self updateAppearance];
 }
