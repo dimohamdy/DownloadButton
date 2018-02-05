@@ -10,7 +10,7 @@
 #import "NSLayoutConstraint+PKDownloadButton.h"
 #import "UIImage+PKDownloadButton.h"
 
-static const CGFloat kDefaultStopButtonWidth = 8.f;
+static const CGFloat kDefaultStopButtonWidth = 10.f;
 
 @interface PKStopDownloadButton ()
 
