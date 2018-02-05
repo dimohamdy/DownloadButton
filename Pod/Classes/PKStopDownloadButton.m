@@ -88,12 +88,10 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
     
     switch (self.state) {
         case kPKStopDownloadButtonState_Resume:
-            [self.stopButton setImage:[UIImage imageNamed:@"play"]
-                             forState:UIControlStateNormal];
+            [self.stopButton setImage:[UIImage imageWithImage:[UIImage imageNamed:@"play"] convertToSize:_stopButtonWidth] forState:UIControlStateNormal];
             break;
         case kPKStopDownloadButtonState_Paused:
-            [self.stopButton setImage:[UIImage imageNamed:@"pause"]
-                             forState:UIControlStateNormal];
+            [self.stopButton setImage:[UIImage imageWithImage:[UIImage imageNamed:@"pause"] convertToSize:_stopButtonWidth] forState:UIControlStateNormal];
             break;
         default:
             NSAssert(NO, @"unsupported state");

@@ -26,6 +26,16 @@
     return image;
 }
 
++ (UIImage *)imageWithImage:(UIImage *)image convertToSize:(CGFloat)size {
+   
+    CGRect stopImageRect = CGRectMake(0.f, 0.f, size, size);
+    UIGraphicsBeginImageContext(CGSizeMake(size, size));
+    [image drawInRect:stopImageRect];
+    UIImage *destImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return destImage;
+}
+
 + (UIImage *)buttonBackgroundWithColor:(UIColor *)color {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(30.f, 30.f), NO, 0.0f);
     

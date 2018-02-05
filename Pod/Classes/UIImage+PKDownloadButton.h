@@ -13,5 +13,5 @@
 + (UIImage *)stopImageOfSize:(CGFloat)size color:(UIColor *)color;
 + (UIImage *)buttonBackgroundWithColor:(UIColor *)color;
 + (UIImage *)highlitedButtonBackgroundWithColor:(UIColor *)color;
-
++ (UIImage *)imageWithImage:(UIImage *)image convertToSize:(CGFloat)size;
 @end
