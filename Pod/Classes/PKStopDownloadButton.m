@@ -16,8 +16,8 @@ static const CGFloat kDefaultStopButtonWidth = 10.f;
 
 @property (nonatomic, weak) UIButton *stopButton;
 @property (nonatomic) PKStopDownloadButtonState state;
-@property (nonatomic, weak) NSString *resumeImageNameForStopButton;
-@property (nonatomic, weak) NSString *pausedImageNameForStopButton;
+@property (nonatomic) NSString *resumeImageNameForStopButton;
+@property (nonatomic) NSString *pausedImageNameForStopButton;
 
 - (UIButton *)createStopButton;
 - (NSArray *)createStopButtonConstraints;
@@ -53,6 +53,7 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
 - (void)setImagesNamesForStopButton:(NSArray*)names{
     self.resumeImageNameForStopButton =  [names firstObject];
     self.pausedImageNameForStopButton =  [names lastObject];
+    [self updateAppearance];
 }
 
 #pragma mark - initialization

@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *stateViews;
 
 - (PKBorderedButton *)createStartDownloadButton;
-- (PKStopDownloadButton *)createStopDownloadButton;
+- (PKStopDownloadButton *)createStopDownloadButtonWith:(NSArray*)names;
 - (PKBorderedButton *)createDownloadedButton;
 - (PKPendingView *)createPendingView;
 
@@ -148,8 +148,9 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
     return startDownloadButton;
 }
 
-- (PKStopDownloadButton *)createStopDownloadButton {
+- (PKStopDownloadButton *)createStopDownloadButtonWith:(NSArray*)names {
     PKStopDownloadButton *stopDownloadButton = [[PKStopDownloadButton alloc] init];
+    [stopDownloadButton setImagesNamesForStopButton:names];
     [stopDownloadButton.stopButton addTarget:self action:@selector(currentButtonTapped:)
                             forControlEvents:UIControlEventTouchUpInside];
     return stopDownloadButton;
@@ -187,7 +188,7 @@ static PKDownloadButton *CommonInit(PKDownloadButton *self) {
     self.startDownloadButton = startDownloadButton;
     [self.stateViews addObject:startDownloadButton];
     
-    PKStopDownloadButton *stopDownloadButton = [self createStopDownloadButton];
+    PKStopDownloadButton *stopDownloadButton = [self createStopDownloadButtonWith:_stopButtonImagesNames];
     stopDownloadButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:stopDownloadButton];
     self.stopDownloadButton = stopDownloadButton;
