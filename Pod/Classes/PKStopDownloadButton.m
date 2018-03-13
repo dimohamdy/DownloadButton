@@ -1,10 +1,10 @@
-//
-//  PKStopDownloadButton.m
-//  PKDownloadButton
-//
-//  Created by Pavel on 28/05/15.
-//  Copyright (c) 2015 Katunin. All rights reserved.
-//
+    //
+    //  PKStopDownloadButton.m
+    //  PKDownloadButton
+    //
+    //  Created by Pavel on 28/05/15.
+    //  Copyright (c) 2015 Katunin. All rights reserved.
+    //
 
 #import "PKStopDownloadButton.h"
 #import "NSLayoutConstraint+PKDownloadButton.h"
@@ -16,6 +16,8 @@ static const CGFloat kDefaultStopButtonWidth = 10.f;
 
 @property (nonatomic, weak) UIButton *stopButton;
 @property (nonatomic) PKStopDownloadButtonState state;
+@property (nonatomic, weak) NSString *resumeImageNameForStopButton;
+@property (nonatomic, weak) NSString *pausedImageNameForStopButton;
 
 - (UIButton *)createStopButton;
 - (NSArray *)createStopButtonConstraints;
@@ -48,6 +50,10 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
                      forState:UIControlStateNormal];
     [self setNeedsDisplay];
 }
+- (void)setImagesNamesForStopButton:(NSArray*)names{
+    self.resumeImageNameForStopButton =  [names firstObject];
+    self.pausedImageNameForStopButton =  [names lastObject];
+}
 
 #pragma mark - initialization
 
@@ -63,7 +69,7 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
 
 - (UIButton *)createStopButton {
     UIButton *stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	stopButton.tintColor = [UIColor clearColor];
+    stopButton.tintColor = [UIColor clearColor];
     _stopButtonWidth = kDefaultStopButtonWidth;
     return stopButton;
 }
@@ -88,23 +94,24 @@ static PKStopDownloadButton *CommonInit(PKStopDownloadButton *self) {
     
     switch (self.state) {
         case kPKStopDownloadButtonState_Resume:
-            [self.stopButton setImage:[UIImage imageNamed:@"DownloadButton_play"] forState:UIControlStateNormal];
+            [self.stopButton setImage:self.resumeImageNameForStopButton forState:UIControlStateNormal];
             break;
         case kPKStopDownloadButtonState_Paused:
-            [self.stopButton setImage:[UIImage imageNamed:@"DownloadButton_pause"] forState:UIControlStateNormal];
+            [self.stopButton setImage:self.pausedImageNameForStopButton forState:UIControlStateNormal];
             break;
         default:
             NSAssert(NO, @"unsupported state");
             break;
     }
-
+    
 }
 - (void)setCurrentState:(PKStopDownloadButtonState)state{
     self.state = state;
     [self updateAppearance];
 }
 ;- (void)tintColorDidChange {
-	[super tintColorDidChange];
-	[self updateAppearance];
+    [super tintColorDidChange];
+    [self updateAppearance];
 }
 @end
+
